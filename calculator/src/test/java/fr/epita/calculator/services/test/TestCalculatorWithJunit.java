@@ -60,11 +60,13 @@ public class TestCalculatorWithJunit {
 
     @AfterAll
     public static void afterAllTest(){
-        System.out.println("printed once: after all");
+        //System.out.println("printed once: after all");
         //Logger testLogger = Logger.getLogger("test");
         //testLogger.info("this is an info message");
 
         LOGGER.info("test");
+        LOGGER.error("test");
+        LOGGER.info(()-> "test" );
     }
 
 }
