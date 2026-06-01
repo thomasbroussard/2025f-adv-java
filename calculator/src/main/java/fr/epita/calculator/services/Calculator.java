@@ -1,6 +1,10 @@
 package fr.epita.calculator.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Calculator {
+    private static final Logger LOGGER = LogManager.getLogger(Calculator.class);
 
     public Double add(Double operand1, Double operand2){
         return operand1 + operand2;
