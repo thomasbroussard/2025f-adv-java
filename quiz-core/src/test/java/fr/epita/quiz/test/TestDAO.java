@@ -2,6 +2,7 @@ package fr.epita.quiz.test;
 
 import fr.epita.quiz.datamodel.Student;
 import fr.epita.quiz.services.EmbeddedStudentDAO;
+import fr.epita.quiz.services.IStudentDAO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +18,8 @@ import java.sql.Connection;
 public class TestDAO {
 
     @Autowired
-    EmbeddedStudentDAO dao;
+    IStudentDAO dao;
+
     @Autowired
     private DataSource dataSource;
 

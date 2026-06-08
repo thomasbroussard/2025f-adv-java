@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmbeddedStudentDAO {
+public class EmbeddedStudentDAO implements IStudentDAO {
 
     private final DataSource ds;
 
@@ -28,6 +28,7 @@ public class EmbeddedStudentDAO {
         }
     }
 
+    @Override
     public void create(Student student) {
         String sql = "INSERT INTO STUDENT (ID, NAME, ADDRESS) VALUES (?, ?, ?)";
         try (Connection cnx = ds.getConnection();
@@ -41,6 +42,7 @@ public class EmbeddedStudentDAO {
         }
     }
 
+    @Override
     public void update(Student student) {
         String sql = "UPDATE STUDENT SET NAME = ?, ADDRESS = ? WHERE ID = ?";
         try (Connection cnx = ds.getConnection();
@@ -54,6 +56,7 @@ public class EmbeddedStudentDAO {
         }
     }
 
+    @Override
     public void delete(Student student) {
         String sql = "DELETE FROM STUDENT WHERE ID = ?";
         try (Connection cnx = ds.getConnection();
@@ -65,6 +68,7 @@ public class EmbeddedStudentDAO {
         }
     }
 
+    @Override
     public List<Student> search(String id) {
         String sql = "SELECT ID, NAME, ADDRESS FROM STUDENT WHERE ID LIKE ?";
         List<Student> results = new ArrayList<>();
@@ -85,6 +89,7 @@ public class EmbeddedStudentDAO {
         return results;
     }
 
+    @Override
     public Student getById(String id) {
         String sql = "SELECT ID, NAME, ADDRESS FROM STUDENT WHERE ID = ?";
         try (Connection cnx = ds.getConnection();

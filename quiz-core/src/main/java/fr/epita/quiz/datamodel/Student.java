@@ -1,7 +1,15 @@
 package fr.epita.quiz.datamodel;
 
+
+@Entity
+@Table(name="STUDENTS")
 public class Student {
+
+    @Id
+    @Column(name="ID", nullable="false")
     private String id;
+
+
     private String name;
     private String address;
 
