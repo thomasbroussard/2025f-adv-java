@@ -23,6 +23,8 @@ public class TestSpring {
     @Test
     public void test(){
         LOGGER.info("version {}", version);
+        BadSpringUsageExample badSpringUsageExample = new BadSpringUsageExample();
+        System.out.println(badSpringUsageExample.getVersion());
     }
 
 }
