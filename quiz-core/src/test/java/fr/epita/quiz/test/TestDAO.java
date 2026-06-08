@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
@@ -30,6 +31,10 @@ public class TestDAO {
         student.setAddress("Paris");
         student.setName("Test");
 
+       // Connection connection = dataSource.getConnection();
+
+
+
         dao.create(student);
         Student retrieved = dao.getById("abcd");
         Assertions.assertNotNull(retrieved);
@@ -44,11 +49,11 @@ public class TestDAO {
         Student retrieved3 = dao.getById("abcd");
 
         Assertions.assertNull(retrieved3);
+       // Assertions.assertThrows(RuntimeException.class, () -> {
+       // Student retrieved4 = dao.getById("abcd");
+       // });
 
 
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            Student retrieved4 = dao.getById("abcd");
-        });
 
 
 

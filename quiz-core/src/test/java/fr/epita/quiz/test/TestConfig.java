@@ -14,7 +14,7 @@ public class TestConfig {
 
     @Bean
     public DataSource dataSource(){
-        return new DriverManagerDataSource("jdbc:h2:mem:test");
+        return new DriverManagerDataSource("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
     }
 
     @Bean
