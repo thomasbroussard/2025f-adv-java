@@ -65,8 +65,13 @@ public class TestCalculatorWithJunit {
         //testLogger.info("this is an info message");
 
         LOGGER.info("test");
+
+
         LOGGER.error("test");
+        LOGGER.warn("");
         LOGGER.info(()-> "test" );
+        LOGGER.debug("d");
+        LOGGER.trace("t");
     }
 
 }
