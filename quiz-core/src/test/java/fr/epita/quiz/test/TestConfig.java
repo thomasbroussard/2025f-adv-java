@@ -2,6 +2,7 @@ package fr.epita.quiz.test;
 
 import fr.epita.quiz.datamodel.Student;
 import fr.epita.quiz.services.EmbeddedStudentDAO;
+import fr.epita.quiz.services.HibernateStudentDAO;
 import fr.epita.quiz.services.IStudentDAO;
 import jakarta.transaction.TransactionManager;
 import org.hibernate.SessionFactory;
@@ -30,33 +31,7 @@ public class TestConfig {
         return new EmbeddedStudentDAO(ds);
     }
 
-    public IStudentDAO getFakeDao(@Autowired DataSource ds){
-        return new IStudentDAO() {
-            @Override
-            public void create(Student student) {
-            }
 
-            @Override
-            public void update(Student student) {
-
-            }
-
-            @Override
-            public void delete(Student student) {
-
-            }
-
-            @Override
-            public List<Student> search(String id) {
-                return List.of();
-            }
-
-            @Override
-            public Student getById(String id) {
-                return null;
-            }
-        };
-    }
 
     @Bean
     public SessionFactory sessionFactory(DataSource ds, @Qualifier("hibernateProperties") Properties hibernateProperties){

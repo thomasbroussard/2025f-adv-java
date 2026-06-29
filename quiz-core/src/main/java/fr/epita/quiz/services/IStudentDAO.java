@@ -4,14 +4,6 @@ import fr.epita.quiz.datamodel.Student;
 
 import java.util.List;
 
-public interface IStudentDAO {
-    void create(Student student);
+public interface IStudentDAO extends IDAO<Student> {
 
-    void update(Student student);
-
-    void delete(Student student);
-
-    List<Student> search(String id);
-
-    Student getById(String id);
 }

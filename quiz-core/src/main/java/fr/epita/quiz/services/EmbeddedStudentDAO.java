@@ -69,6 +69,16 @@ public class EmbeddedStudentDAO implements IStudentDAO {
     }
 
     @Override
+    public List<Student> search(Student qbe) {
+        return List.of();
+    }
+
+    @Override
+    public Student getById(Object id) {
+        return null;
+    }
+
+    @Override
     public List<Student> search(String id) {
         String sql = "SELECT ID, NAME, ADDRESS FROM STUDENT WHERE ID LIKE ?";
         List<Student> results = new ArrayList<>();
