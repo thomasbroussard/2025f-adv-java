@@ -11,6 +11,7 @@
     <modules>
         <module>calculator</module>
         <module>quiz-core</module>
+        <module>quiz-rest</module>
     </modules>
 
     <properties>
