@@ -68,23 +68,14 @@ public class EmbeddedStudentDAO implements IStudentDAO {
         }
     }
 
-    @Override
+
+
     public List<Student> search(Student qbe) {
-        return List.of();
-    }
-
-    @Override
-    public Student getById(Object id) {
-        return null;
-    }
-
-    @Override
-    public List<Student> search(String id) {
         String sql = "SELECT ID, NAME, ADDRESS FROM STUDENT WHERE ID LIKE ?";
         List<Student> results = new ArrayList<>();
         try (Connection cnx = ds.getConnection();
              PreparedStatement ps = cnx.prepareStatement(sql)) {
-            ps.setString(1, "%" + id + "%");
+            ps.setString(1, "%" + qbe.getId() + "%");
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     results.add(new Student(
@@ -100,11 +91,11 @@ public class EmbeddedStudentDAO implements IStudentDAO {
     }
 
     @Override
-    public Student getById(String id) {
+    public Student getById(Object id) {
         String sql = "SELECT ID, NAME, ADDRESS FROM STUDENT WHERE ID = ?";
         try (Connection cnx = ds.getConnection();
              PreparedStatement ps = cnx.prepareStatement(sql)) {
-            ps.setString(1, id);
+            ps.setString(1, String.valueOf(id));
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new Student(
