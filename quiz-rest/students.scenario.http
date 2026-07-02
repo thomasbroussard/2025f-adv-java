@@ -1,0 +1,129 @@
+
+
+@host = http://localhost:8080
+@studentsUrl = {{host}}/api/v1/students
+
+### 1. List students - empty (or whatever is already stored) [GET]
+GET {{studentsUrl}}
+Accept: application/json
+
+> {%
+    client.test("list returns 200", function () {
+        client.assert(response.status === 200, "Expected 200 but got " + response.status);
+    });
+%}
+
+### 2. Create first student - Alice [POST]
+POST {{studentsUrl}}
+Content-Type: application/json
+
+{
+  "id": "s1",
+  "name": "Alice",
+  "address": "Paris"
+}
+
+> {%
+    client.test("Alice created", function () {
+        client.assert(response.status === 201, "Expected 201 but got " + response.status);
+        client.assert(response.body.id === "s1", "id should be s1");
+        client.assert(response.body.name === "Alice", "name should be Alice");
+    });
+%}
+
+### 3. Create second student - Bob [POST]
+POST {{studentsUrl}}
+Content-Type: application/json
+
+{
+  "id": "s2",
+  "name": "Bob",
+  "address": "Lyon"
+}
+
+> {%
+    client.test("Bob created", function () {
+        client.assert(response.status === 201, "Expected 201 but got " + response.status);
+    });
+%}
+
+### 4. List students - now contains Alice and Bob [GET]
+GET {{studentsUrl}}
+Accept: application/json
+
+> {%
+    client.test("list contains both students", function () {
+        client.assert(response.status === 200, "Expected 200 but got " + response.status);
+        const ids = response.body.map(function (s) { return s.id; });
+        client.assert(ids.indexOf("s1") !== -1, "s1 should be present");
+        client.assert(ids.indexOf("s2") !== -1, "s2 should be present");
+    });
+%}
+
+### 5. Fetch a single student by id [GET /{id}]
+GET {{studentsUrl}}/s1
+Accept: application/json
+
+> {%
+    client.test("Alice fetched", function () {
+        client.assert(response.status === 200, "Expected 200 but got " + response.status);
+        client.assert(response.body.address === "Paris", "address should be Paris");
+    });
+%}
+
+### 6. Update a student [PUT /{id}]
+PUT {{studentsUrl}}/s1
+Content-Type: application/json
+
+{
+  "name": "Alice Cooper",
+  "address": "Marseille"
+}
+
+> {%
+    client.test("Alice updated", function () {
+        client.assert(response.status === 200, "Expected 200 but got " + response.status);
+        client.assert(response.body.name === "Alice Cooper", "name should be updated");
+        client.assert(response.body.address === "Marseille", "address should be updated");
+    });
+%}
+
+### 7. Confirm the update was persisted [GET /{id}]
+GET {{studentsUrl}}/s1
+Accept: application/json
+
+> {%
+    client.test("update persisted", function () {
+        client.assert(response.status === 200, "Expected 200 but got " + response.status);
+        client.assert(response.body.name === "Alice Cooper", "name should still be updated");
+    });
+%}
+
+### 8. Delete a student [DELETE /{id}]
+DELETE {{studentsUrl}}/s2
+
+> {%
+    client.test("Bob deleted", function () {
+        client.assert(response.status === 204, "Expected 204 but got " + response.status);
+    });
+%}
+
+### 9. Deleted student is gone [GET /{id} -> 404]
+GET {{studentsUrl}}/s2
+Accept: application/json
+
+> {%
+    client.test("deleted student returns 404", function () {
+        client.assert(response.status === 404, "Expected 404 but got " + response.status);
+    });
+%}
+
+### 10. Unknown student -> 404 [GET /{id}]
+GET {{studentsUrl}}/does-not-exist
+Accept: application/json
+
+> {%
+    client.test("unknown student returns 404", function () {
+        client.assert(response.status === 404, "Expected 404 but got " + response.status);
+    });
+%}
