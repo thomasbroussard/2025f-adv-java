@@ -29,13 +29,13 @@ public class Config {
 
 
 
-    @Bean
-    public SessionFactory sessionFactory(DataSource ds, @Qualifier("hibernateProperties") Properties hibernateProperties){
-        LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
-        localSessionFactoryBean.setDataSource(ds);
-        localSessionFactoryBean.setHibernateProperties(hibernateProperties);
-        return localSessionFactoryBean.getObject();
-    }
+//    @Bean
+//    public SessionFactory sessionFactory(DataSource ds, @Qualifier("hibernateProperties") Properties hibernateProperties){
+//        LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
+//        localSessionFactoryBean.setDataSource(ds);
+//        localSessionFactoryBean.setHibernateProperties(hibernateProperties);
+//        return localSessionFactoryBean.getObject();
+//    }
 
     @Bean
     public Properties hibernateProperties(){
