@@ -1,8 +1,8 @@
 package fr.epita.quiz.services;
 
-import fr.epita.quiz.datamodel.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 public abstract class GenericHibernateDAO<T> implements IDAO<T> {
 
@@ -10,29 +10,35 @@ public abstract class GenericHibernateDAO<T> implements IDAO<T> {
     SessionFactory sf;
 
 
-    public GenericHibernateDAO(SessionFactory sf){
+    public GenericHibernateDAO(SessionFactory sf) {
         this.sf = sf;
     }
 
     @Override
-    public void create(T student) {
-        Session session = sf.openSession();
-        session.persist(student);
-        session.flush();
+    public void create(T entity) {
+        try (Session session = sf.openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.persist(entity);
+            tx.commit();
+        }
     }
 
     @Override
-    public void update(T student) {
-        Session session = sf.openSession();
-        session.merge(student);
-        session.flush();
+    public void update(T entity) {
+        try (Session session = sf.openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.merge(entity);
+            tx.commit();
+        }
     }
 
     @Override
-    public void delete(T student) {
-        Session session = sf.openSession();
-        session.remove(student);
-        session.flush();
+    public void delete(T entity) {
+        try (Session session = sf.openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.remove(entity);
+            tx.commit();
+        }
     }
 
 }
